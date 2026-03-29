@@ -1,0 +1,1586 @@
+/* Heart River - Swift UI 风格样式 */
+
+/* CSS 变量 */
+:root {
+    /* 亮色主题 */
+    --primary: #007AFF;
+    --secondary: #34C759;
+    --accent: #FF9500;
+    --background: #F2F2F7;
+    --card-bg: #FFFFFF;
+    --text-primary: #1C1C1E;
+    --text-secondary: #8E8E93;
+    --border: #E5E5EA;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --danger: #FF3B30;
+
+    /* 间距 */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* 圆角 */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    /* 过渡 */
+    --transition: 0.3s ease;
+}
+
+/* 暗色主题 */
+[data-theme="dark"] {
+    --background: #000000;
+    --card-bg: #1C1C1E;
+    --text-primary: #FFFFFF;
+    --text-secondary: #8E8E93;
+    --border: #38383A;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* 重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+/* 导航栏 */
+.navbar {
+    height: 56px;
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-lg);
+    box-shadow: 0 1px 3px var(--shadow);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+}
+
+.nav-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+/* 按钮样式 */
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.icon-btn:hover {
+    background: var(--background);
+}
+
+.icon-btn svg {
+    opacity: 0.8;
+}
+
+.icon-btn:hover svg {
+    opacity: 1;
+}
+
+.lang-btn {
+    width: auto;
+    min-width: 40px;
+    padding: 0 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+/* 主题切换图标 */
+[data-theme="dark"] .icon-sun {
+    display: none;
+}
+
+[data-theme="dark"] .icon-moon {
+    display: block;
+}
+
+.icon-moon {
+    display: none;
+}
+
+/* 主按钮 */
+.primary-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    transition: var(--transition);
+}
+
+.primary-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px var(--primary);
+}
+
+/* 次按钮 */
+.secondary-btn {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.secondary-btn:hover {
+    background: var(--background);
+}
+
+/* 危险按钮 */
+.danger-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.danger-btn:hover {
+    transform: scale(1.02);
+}
+
+/* 桌面端布局 */
+.desktop-layout {
+    display: flex;
+    height: calc(100vh - 56px);
+    margin-top: 56px;
+}
+
+/* 地图容器 */
+.map-container {
+    flex: 0 0 70%;
+    position: relative;
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* 悬浮按钮 */
+.fab {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px var(--primary);
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px var(--primary);
+}
+
+/* 侧边栏 */
+.sidebar {
+    flex: 0 0 30%;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* 规划列表 */
+.projects-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* 规划卡片 */
+.project-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    box-shadow: 0 2px 8px var(--shadow);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid var(--border);
+}
+
+.project-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px var(--shadow);
+}
+
+.project-card.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary);
+}
+
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-sm);
+}
+
+.project-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.project-card-actions {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.project-card-actions button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.project-card-actions button:hover {
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+.project-card-info {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.project-card-nodes {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* 节点列表 */
+.nodes-list {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+}
+
+.node-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-xs);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.node-item:hover {
+    background: var(--background);
+}
+
+.node-order {
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.node-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.node-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.node-time {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* 移动端标签栏 */
+.mobile-tabs {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+}
+
+.tab-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-sm) var(--space-md);
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+}
+
+.tab-btn svg {
+    opacity: 0.6;
+}
+
+.tab-btn.active svg {
+    opacity: 1;
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-small {
+    max-width: 300px;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+}
+
+/* 表单样式 */
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    background: var(--background);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.form-group input[readonly],
+.form-group textarea[readonly] {
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.form-row {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+/* 确认对话框 */
+.confirm-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+}
+
+/* 导入模态框 */
+.import-hint {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+}
+
+.import-options {
+    margin-bottom: var(--space-md);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    width: 18px;
+    height: 18px;
+}
+
+/* 响应式设计 */
+@media (max-width: 767px) {
+    .desktop-layout {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 56px - 60px);
+        margin-top: 56px;
+    }
+
+    .mobile-tabs {
+        display: flex;
+    }
+
+    .app-mobile .map-container,
+    .app-mobile .sidebar {
+        display: none;
+    }
+
+    .app-mobile .map-container.show {
+        display: block;
+        flex: 1;
+        width: 100%;
+        height: 100%;
+    }
+
+    .app-mobile .sidebar.show {
+        display: flex;
+        flex: 1;
+        width: 100%;
+        height: 100%;
+    }
+
+    .app-mobile .fab {
+        bottom: 80px;
+    }
+
+    body {
+        padding-bottom: 60px;
+    }
+
+    .modal-content {
+        max-width: 100%;
+    }
+}
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--text-secondary);
+}
+
+.empty-state svg {
+    width: 64px;
+    height: 64px;
+    opacity: 0.3;
+    margin-bottom: var(--space-md);
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* 地图标记样式 */
+.custom-marker {
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.custom-marker.selected {
+    background: var(--accent);
+    transform: scale(1.2);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* 动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project-card {
+    animation: fadeIn 0.3s ease;
+}
+
+.node-item {
+    animation: fadeIn 0.2s ease;
+}
+
+/* Flatpickr 自定义样式 */
+.flatpickr-calendar {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.date-picker,
+.date-time-picker {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    background: var(--background);
+    color: var(--text-primary);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.date-picker:focus,
+.date-time-picker:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* 暗色主题下的flatpickr */
+[data-theme="dark"] .flatpickr-calendar {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .flatpickr-day {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .flatpickr-day:hover {
+    background: var(--background);
+}
+
+[data-theme="dark"] .flatpickr-months .flatpickr-month {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .flatpickr-weekday {
+    background: var(--card-bg);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] span.flatpickr-weekday {
+    color: var(--text-secondary);
+}
+
+/* 地图搜索框 */
+.map-search {
+    position: absolute;
+    top: 16px;
+    left: 50px;
+    z-index: 1000;
+    width: 250px;
+}
+
+.map-search input {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    box-shadow: 0 2px 8px var(--shadow);
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.map-search input:focus {
+    outline: none;
+    box-shadow: 0 2px 12px var(--shadow);
+}
+
+.search-results {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 16px var(--shadow);
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 4px;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-results .result-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.search-results .result-item:last-child {
+    border-bottom: none;
+}
+
+.search-results .result-item:hover {
+    background: var(--background);
+}
+
+.search-results .result-item .result-main {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.search-results .result-item .result-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-results .result-item .result-type {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* 定位按钮 */
+.location-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--card-bg);
+    box-shadow: 0 2px 8px var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.location-btn:hover {
+    background: var(--background);
+}
+
+.location-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* 节点搜索输入组 */
+.search-input-group {
+    position: relative;
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.search-input-group input {
+    flex: 1;
+}
+
+.search-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--background);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.search-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+/* 搜索结果下拉 */
+.search-results-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 16px var(--shadow);
+    max-height: 180px;
+    overflow-y: auto;
+    z-index: 10;
+    margin-top: 2px;
+}
+
+.search-results-dropdown.show {
+    display: block;
+}
+
+.search-results-dropdown .result-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.search-results-dropdown .result-item:last-child {
+    border-bottom: none;
+}
+
+.search-results-dropdown .result-item:hover {
+    background: var(--background);
+}
+
+/* 颜色选择器 */
+.color-picker-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.color-picker-group input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    padding: 0;
+}
+
+.color-picker-group input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.color-picker-group input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: var(--radius-sm);
+}
+
+.color-preview {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-family: monospace;
+}
+
+/* 工程颜色标记 */
+.project-color-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: var(--space-xs);
+    flex-shrink: 0;
+}
+
+/* 搜索结果标记 */
+.search-marker-pin {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-marker-label {
+    background: white;
+    color: #333;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    margin-top: -4px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 暗色主题下搜索标记 */
+[data-theme="dark"] .search-marker-label {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+/* 模式切换按钮 */
+.mode-toggle-btn {
+    position: absolute;
+    top: 70px;
+    right: 16px;
+    padding: 8px 12px;
+    background: var(--card-bg);
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.mode-toggle-btn:hover {
+    background: var(--background);
+}
+
+.mode-toggle-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* 种草列表样式 */
+.recommendations-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.city-group {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    box-shadow: 0 2px 8px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.city-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+    cursor: pointer;
+}
+
+.city-group-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.city-group-count {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--background);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.recommend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-xs);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.recommend-item:hover {
+    background: var(--background);
+}
+
+.recommend-color-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.recommend-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.recommend-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.recommend-name .status-icon {
+    font-size: 14px;
+}
+
+.recommend-time {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.recommend-actions {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.recommend-actions button {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recommend-actions button:hover {
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+/* 种草标记样式 */
+.recommend-marker {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 1;
+    text-shadow: 0 0 4px rgba(255,255,255,0.95), 0 1px 6px rgba(0,0,0,0.45);
+}
+
+.recommend-marker span {
+    display: block;
+    -webkit-text-stroke: 5px rgba(50, 50, 50, 0.98);
+    paint-order: stroke fill;
+    text-shadow: 0 0 2px rgba(255,255,255,0.98), 0 0 6px rgba(0,0,0,0.35);
+}
+
+/* 种草城市区块 */
+.city-area {
+    opacity: 0.95;
+}
+/* 2026 layout refresh */
+body {
+    font-family: "Segoe UI Variable Display", "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(15, 98, 254, 0.14), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.12), transparent 32%),
+        linear-gradient(180deg, #f6f9fd 0%, #eef3f9 100%);
+}
+
+[data-theme="dark"] body,
+[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+[data-theme="dark"] body {
+    background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.12), transparent 32%),
+        linear-gradient(180deg, #07111f 0%, #0b1220 100%);
+}
+
+#app {
+    position: relative;
+    z-index: 1;
+}
+
+.desktop-layout {
+    height: 100vh;
+    margin-top: 0;
+    padding: 18px;
+    gap: 18px;
+}
+
+.map-container {
+    flex-basis: 68%;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 28px 60px rgba(15, 23, 42, 0.16);
+}
+
+.map-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.08), transparent 24%, transparent 76%, rgba(15, 23, 42, 0.12));
+    pointer-events: none;
+    z-index: 350;
+}
+
+.map-floating-brand {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+}
+
+[data-theme="dark"] .map-floating-brand,
+[data-theme="dark"] .map-toolbar,
+[data-theme="dark"] .map-search input,
+[data-theme="dark"] .location-btn,
+[data-theme="dark"] .mode-toggle-btn {
+    background: rgba(15, 23, 42, 0.76);
+    border-color: rgba(148, 163, 184, 0.16);
+}
+
+.brand-chip {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f62fe 0%, #1d4ed8 100%);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    box-shadow: 0 12px 24px rgba(15, 98, 254, 0.26);
+}
+
+.brand-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.map-search-shell {
+    position: absolute;
+    top: 88px;
+    left: 18px;
+    z-index: 1000;
+    width: min(390px, calc(100% - 132px));
+}
+
+.map-search {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+}
+
+.map-search input {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.84);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+    font-size: 14px;
+}
+
+.search-results {
+    margin-top: 8px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .search-results {
+    background: rgba(15, 23, 42, 0.94);
+    border-color: rgba(148, 163, 184, 0.16);
+}
+
+.map-toolbar {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+}
+
+.map-toolbar .icon-btn,
+.location-btn,
+.mode-toggle-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.42);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+.map-toolbar .icon-btn:hover,
+.location-btn:hover,
+.mode-toggle-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] .map-toolbar .icon-btn:hover,
+[data-theme="dark"] .location-btn:hover,
+[data-theme="dark"] .mode-toggle-btn:hover {
+    background: rgba(15, 23, 42, 0.92);
+}
+
+.lang-btn {
+    min-width: 48px;
+    padding: 0 14px;
+}
+
+.map-utility-stack {
+    position: absolute;
+    right: 18px;
+    top: 88px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.location-btn {
+    position: static;
+}
+
+.mode-toggle-btn {
+    position: static;
+    width: auto;
+    min-width: 138px;
+    padding: 0 14px;
+    justify-content: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.fab {
+    right: 20px;
+    bottom: 20px;
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #0f62fe 0%, #2563eb 100%);
+    box-shadow: 0 20px 32px rgba(15, 98, 254, 0.28);
+}
+
+.fab:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.sidebar {
+    flex-basis: 32%;
+    min-width: 340px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.48);
+    border-left: none;
+    border-radius: 32px;
+    box-shadow: 0 28px 60px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme="dark"] .sidebar,
+[data-theme="dark"] .project-card,
+[data-theme="dark"] .city-group,
+[data-theme="dark"] .modal-content {
+    background: rgba(15, 23, 42, 0.72);
+    border-color: rgba(148, 163, 184, 0.16);
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.sidebar-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-kicker {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+}
+
+.sidebar-header h2 {
+    font-size: 26px;
+    letter-spacing: -0.04em;
+}
+
+.projects-list,
+.recommendations-list {
+    padding: 18px;
+    gap: 14px;
+}
+
+.project-card,
+.city-group {
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 24px;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 34px rgba(15, 23, 42, 0.12);
+}
+
+.project-card.active {
+    box-shadow: 0 0 0 1px rgba(15, 98, 254, 0.4), 0 18px 32px rgba(15, 98, 254, 0.12);
+}
+
+.project-card-actions button {
+    background: rgba(148, 163, 184, 0.08);
+    border-radius: 12px;
+}
+
+.project-card-info,
+.project-card-nodes,
+.node-time,
+.city-group-count {
+    font-size: 12px;
+}
+
+.nodes-list {
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
+.node-item {
+    border-radius: 16px;
+}
+
+.modal {
+    background: rgba(15, 23, 42, 0.34);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.52);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+}
+
+@media (max-width: 767px) {
+    .desktop-layout {
+        height: calc(100vh - 60px);
+        padding: 0;
+        gap: 0;
+    }
+
+    .map-container,
+    .sidebar {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .map-floating-brand {
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        max-width: calc(100% - 28px);
+    }
+
+    .map-toolbar {
+        top: auto;
+        right: 14px;
+        bottom: 94px;
+        flex-direction: column;
+        border-radius: 20px;
+    }
+
+    .map-search-shell {
+        top: 84px;
+        left: 14px;
+        width: calc(100% - 28px);
+    }
+
+    .map-utility-stack {
+        top: auto;
+        right: 14px;
+        bottom: 286px;
+    }
+
+    .mode-toggle-btn {
+        min-width: 126px;
+    }
+
+    .app-mobile .fab {
+        bottom: 84px;
+        right: 14px;
+    }
+}
+
+/* Mode toggle placement update */
+.map-floating-brand,
+.brand-chip,
+.brand-title,
+.brand-subtitle,
+.map-utility-stack {
+    display: none !important;
+}
+
+.map-search-shell {
+    top: 18px;
+    left: 74px;
+}
+
+.location-btn {
+    position: absolute;
+    top: auto;
+    right: auto;
+    left: 18px;
+    bottom: 20px;
+}
+
+.sidebar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.sidebar-mode-toggle {
+    min-width: 132px;
+    background: rgba(148, 163, 184, 0.08);
+    margin-left: auto;
+    order: 2;
+    flex-shrink: 0;
+}
+
+.mode-toggle-btn.active:hover {
+    background: var(--primary);
+    color: white;
+}
+
+#addProjectBtn {
+    order: 1;
+}
+
+.mode-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+    .map-search-shell {
+        top: 14px;
+        left: 14px;
+    }
+
+    .location-btn {
+        top: auto;
+        right: auto;
+        left: 14px;
+        bottom: 84px;
+    }
+
+    .sidebar-actions {
+        gap: 8px;
+    }
+}

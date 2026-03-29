@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart River - 旅行规划管理</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+</head>
+<body>
+    <div id="app">
+        <main class="desktop-layout">
+            <section class="map-container" id="mapContainer">
+                <div id="map"></div>
+
+                <div class="map-search-shell">
+                    <div class="map-search">
+                        <input type="text" id="mapSearchInput" data-i18n-placeholder="mapSearchPlaceholder" placeholder="搜索地点...">
+                        <div id="mapSearchResults" class="search-results"></div>
+                    </div>
+                </div>
+
+                <div class="map-toolbar">
+                    <button class="icon-btn" id="importBtn" data-i18n-title="import" title="导入">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="exportBtn" data-i18n-title="export" title="导出">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn lang-btn" id="languageToggle" data-i18n-title="languageToggle" title="切换语言">
+                        <span id="languageToggleLabel">EN</span>
+                    </button>
+                    <button class="icon-btn" id="themeToggle" data-i18n-title="themeToggle" title="切换主题">
+                        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-.45 1-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                        </svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <button class="location-btn" id="locationBtn" data-i18n-title="myLocation" title="定位到我的位置">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+                    </svg>
+                </button>
+
+                <button class="fab" id="addNodeBtn" data-i18n-title="addNode" title="添加节点">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                </button>
+            </section>
+
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <div class="sidebar-heading">
+                        <div class="sidebar-kicker">Heart River</div>
+                        <h2 data-i18n="myPlans">我的规划</h2>
+                    </div>
+                    <div class="sidebar-actions">
+                        <button class="primary-btn" id="addProjectBtn">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                            </svg>
+                            <span data-i18n="newPlan">新建规划</span>
+                        </button>
+                        <button class="mode-toggle-btn sidebar-mode-toggle js-mode-toggle" data-i18n-title="modeToggle" title="切换模式">
+                            <svg class="mode-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                                <path fill="currentColor" d="M7 7h11v2H7V7zm0 8h11v2H7v-2zm-3-4h13v2H4v-2zm14.59-6L21 7.41l-5.17 5.17-2.59-2.58L11.83 11l4 4L21 9.83 22.41 11.24 18.59 15.06 17.17 13.65 20 10.83 18.59 9.41l-2.76 2.76-4-4L7 13H3v-2h4.17l4.66-4.66 4 4L18.59 7.59 17.17 6.17 18.59 5z"/>
+                            </svg>
+                            <span class="mode-text js-mode-text" data-i18n="modePlan">规划模式</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="projects-list" id="projectsList"></div>
+            </aside>
+
+            <aside class="sidebar" id="recommendSidebar" style="display: none;">
+                <div class="sidebar-header">
+                    <div class="sidebar-heading">
+                        <div class="sidebar-kicker">Heart River</div>
+                        <h2 data-i18n="myWishlist">我的种草</h2>
+                    </div>
+                    <div class="sidebar-actions">
+                        <button class="mode-toggle-btn sidebar-mode-toggle js-mode-toggle" data-i18n-title="modeToggle" title="切换模式">
+                            <svg class="mode-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                                <path fill="currentColor" d="M7 7h11v2H7V7zm0 8h11v2H7v-2zm-3-4h13v2H4v-2zm14.59-6L21 7.41l-5.17 5.17-2.59-2.58L11.83 11l4 4L21 9.83 22.41 11.24 18.59 15.06 17.17 13.65 20 10.83 18.59 9.41l-2.76 2.76-4-4L7 13H3v-2h4.17l4.66-4.66 4 4L18.59 7.59 17.17 6.17 18.59 5z"/>
+                            </svg>
+                            <span class="mode-text js-mode-text" data-i18n="modePlan">规划模式</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="recommendations-list" id="recommendationsList"></div>
+            </aside>
+        </main>
+
+        <nav class="mobile-tabs" id="mobileTabs">
+            <button class="tab-btn active" data-tab="map">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
+                </svg>
+                <span data-i18n="tabMap">地图</span>
+            </button>
+            <button class="tab-btn" data-tab="list">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                </svg>
+                <span data-i18n="tabList">列表</span>
+            </button>
+            <button class="tab-btn" data-tab="recommend">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span data-i18n="tabWishlist">种草</span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="projectModalTitle" data-i18n="newPlan">新建规划</h3>
+            <form id="projectForm">
+                <input type="hidden" id="projectId">
+                <div class="form-group">
+                    <label for="projectName" data-i18n="planName">规划名称</label>
+                    <input type="text" id="projectName" required data-i18n-placeholder="planNamePlaceholder" placeholder="例如：春节云南之旅">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startDate" data-i18n="startDate">开始日期</label>
+                        <input type="text" class="date-picker" id="startDate" data-i18n-placeholder="selectDate" placeholder="选择日期" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate" data-i18n="endDate">结束日期</label>
+                        <input type="text" class="date-picker" id="endDate" data-i18n-placeholder="selectDate" placeholder="选择日期" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projectColor" data-i18n="planColor">规划颜色</label>
+                    <div class="color-picker-group">
+                        <input type="color" id="projectColor" value="#007AFF">
+                        <span class="color-preview" id="projectColorPreview">#007AFF</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projectRemark" data-i18n="remark">备注</label>
+                    <textarea id="projectRemark" rows="3" data-i18n-placeholder="optionalRemark" placeholder="可选备注信息"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="cancelProjectBtn" data-i18n="cancel">取消</button>
+                    <button type="submit" class="primary-btn" data-i18n="save">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="nodeModal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="nodeModalTitle" data-i18n="addNode">添加节点</h3>
+            <form id="nodeForm">
+                <input type="hidden" id="nodeId">
+                <input type="hidden" id="nodeProjectId">
+                <div class="form-group">
+                    <label for="placeName" data-i18n="placeName">地点名称</label>
+                    <div class="search-input-group">
+                        <input type="text" id="placeName" required data-i18n-placeholder="placeNamePlaceholder" placeholder="例如：北京站">
+                        <button type="button" class="search-btn" id="nodeSearchBtn" data-i18n-title="searchPlace" title="搜索地点">
+                            <svg viewBox="0 0 24 24" width="18" height="18">
+                                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="nodeSearchResults" class="search-results-dropdown"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="latitude" data-i18n="latitudeAuto">纬度（自动填充）</label>
+                        <input type="number" step="0.0001" id="latitude" readonly data-i18n-placeholder="autoFillCoordinates" placeholder="通过搜索或地图点击自动填充">
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude" data-i18n="longitudeAuto">经度（自动填充）</label>
+                        <input type="number" step="0.0001" id="longitude" readonly data-i18n-placeholder="autoFillCoordinates" placeholder="通过搜索或地图点击自动填充">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nodeTime" data-i18n="plannedTime">计划时间</label>
+                    <input type="text" class="date-time-picker" id="nodeTime" data-i18n-placeholder="selectDateTime" placeholder="选择日期和时间">
+                </div>
+                <div class="form-group">
+                    <label for="nodeColor" data-i18n="nodeColor">节点颜色</label>
+                    <div class="color-picker-group">
+                        <input type="color" id="nodeColor" value="#007AFF">
+                        <span class="color-preview" id="nodeColorPreview">#007AFF</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nodeRemark" data-i18n="remark">备注</label>
+                    <textarea id="nodeRemark" rows="2" data-i18n-placeholder="optionalRemark" placeholder="可选备注信息"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="cancelNodeBtn" data-i18n="cancel">取消</button>
+                    <button type="submit" class="primary-btn" data-i18n="save">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmModal">
+        <div class="modal-content modal-small">
+            <h3 class="modal-title" data-i18n="confirmDeleteTitle">确认删除</h3>
+            <p class="confirm-text" id="confirmText" data-i18n="confirmDeletePlan">确定要删除这个规划吗？</p>
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" id="confirmCancelBtn" data-i18n="cancel">取消</button>
+                <button type="button" class="danger-btn" id="confirmOkBtn" data-i18n="delete">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <h3 class="modal-title" data-i18n="importData">导入数据</h3>
+            <p class="import-hint" data-i18n="importHint">请选择 JSON 文件或将内容粘贴到下方</p>
+            <textarea id="importText" rows="6" placeholder='{"projects": [...], "recommendations": [...]}'></textarea>
+            <div class="import-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="mergeData">
+                    <span data-i18n="mergeExistingData">合并到现有数据</span>
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" id="cancelImportBtn" data-i18n="cancel">取消</button>
+                <button type="button" class="primary-btn" id="doImportBtn" data-i18n="import">导入</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="recommendModal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="recommendModalTitle" data-i18n="addWishlist">添加种草</h3>
+            <form id="recommendForm">
+                <input type="hidden" id="recommendId">
+                <input type="hidden" id="recommendLat">
+                <input type="hidden" id="recommendLng">
+                <div class="form-group">
+                    <label for="recommendName" data-i18n="wishlistName">名称（留空使用城市名）</label>
+                    <input type="text" id="recommendName" data-i18n-placeholder="wishlistNamePlaceholder" placeholder="例如：故宫博物院">
+                </div>
+                <div class="form-group">
+                    <label for="recommendCity" data-i18n="city">城市</label>
+                    <input type="text" id="recommendCity" data-i18n-placeholder="cityPlaceholder" placeholder="例如：北京市">
+                </div>
+                <div class="form-group">
+                    <label for="recommendColor" data-i18n="color">颜色</label>
+                    <div class="color-picker-group">
+                        <input type="color" id="recommendColor" value="#FF6B6B">
+                        <span class="color-preview" id="recommendColorPreview">#FF6B6B</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="recommendTime" data-i18n="time">时间</label>
+                    <input type="text" class="date-time-picker" id="recommendTime" data-i18n-placeholder="selectDateTime" placeholder="选择日期和时间">
+                </div>
+                <div class="form-group">
+                    <label for="recommendRemark" data-i18n="remark">备注</label>
+                    <textarea id="recommendRemark" rows="2" data-i18n-placeholder="optionalRemark" placeholder="可选备注信息"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="recommendCompleted">
+                        <span data-i18n="completed">已完成</span>
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" id="cancelRecommendBtn" data-i18n="cancel">取消</button>
+                    <button type="submit" class="primary-btn" data-i18n="save">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display: none;">
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
