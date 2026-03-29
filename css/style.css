@@ -705,6 +705,7 @@ body {
 [data-theme="dark"] .flatpickr-calendar {
     background: var(--card-bg);
     border: 1px solid var(--border);
+    box-shadow: 0 20px 40px rgba(2, 6, 23, 0.45);
 }
 
 [data-theme="dark"] .flatpickr-day {
@@ -715,8 +716,41 @@ body {
     background: var(--background);
 }
 
+[data-theme="dark"] .flatpickr-months,
+[data-theme="dark"] .flatpickr-weekdays,
+[data-theme="dark"] .flatpickr-innerContainer,
+[data-theme="dark"] .flatpickr-rContainer,
+[data-theme="dark"] .flatpickr-days,
+[data-theme="dark"] .dayContainer {
+    background: transparent;
+}
+
 [data-theme="dark"] .flatpickr-months .flatpickr-month {
     background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .flatpickr-current-month input.cur-year,
+[data-theme="dark"] .flatpickr-current-month .flatpickr-monthDropdown-months {
+    color: var(--text-primary);
+    background: transparent;
+}
+
+[data-theme="dark"] .flatpickr-monthDropdown-month,
+[data-theme="dark"] .numInputWrapper span.arrowUp:after,
+[data-theme="dark"] .numInputWrapper span.arrowDown:after {
+    border-color: var(--text-secondary);
+}
+
+[data-theme="dark"] .flatpickr-prev-month,
+[data-theme="dark"] .flatpickr-next-month {
+    fill: var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .flatpickr-prev-month:hover,
+[data-theme="dark"] .flatpickr-next-month:hover {
+    fill: var(--text-primary);
     color: var(--text-primary);
 }
 
@@ -727,6 +761,79 @@ body {
 
 [data-theme="dark"] span.flatpickr-weekday {
     color: var(--text-secondary);
+}
+
+[data-theme="dark"] .flatpickr-day.flatpickr-disabled,
+[data-theme="dark"] .flatpickr-day.flatpickr-disabled:hover,
+[data-theme="dark"] .flatpickr-day.prevMonthDay,
+[data-theme="dark"] .flatpickr-day.nextMonthDay,
+[data-theme="dark"] .flatpickr-day.notAllowed,
+[data-theme="dark"] .flatpickr-day.notAllowed.prevMonthDay,
+[data-theme="dark"] .flatpickr-day.notAllowed.nextMonthDay {
+    color: rgba(148, 163, 184, 0.35);
+}
+
+[data-theme="dark"] .flatpickr-day.today {
+    border-color: rgba(59, 130, 246, 0.8);
+    color: #bfdbfe;
+}
+
+[data-theme="dark"] .flatpickr-day.today:hover {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.9);
+}
+
+[data-theme="dark"] .flatpickr-day.selected,
+[data-theme="dark"] .flatpickr-day.startRange,
+[data-theme="dark"] .flatpickr-day.endRange,
+[data-theme="dark"] .flatpickr-day.selected.inRange,
+[data-theme="dark"] .flatpickr-day.startRange.inRange,
+[data-theme="dark"] .flatpickr-day.endRange.inRange,
+[data-theme="dark"] .flatpickr-day.selected:focus,
+[data-theme="dark"] .flatpickr-day.startRange:focus,
+[data-theme="dark"] .flatpickr-day.endRange:focus,
+[data-theme="dark"] .flatpickr-day.selected:hover,
+[data-theme="dark"] .flatpickr-day.startRange:hover,
+[data-theme="dark"] .flatpickr-day.endRange:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+[data-theme="dark"] .flatpickr-day.inRange,
+[data-theme="dark"] .flatpickr-day.prevMonthDay.inRange,
+[data-theme="dark"] .flatpickr-day.nextMonthDay.inRange,
+[data-theme="dark"] .flatpickr-day.today.inRange,
+[data-theme="dark"] .flatpickr-day.prevMonthDay.today.inRange,
+[data-theme="dark"] .flatpickr-day.nextMonthDay.today.inRange,
+[data-theme="dark"] .flatpickr-day:hover.inRange,
+[data-theme="dark"] .flatpickr-day.prevMonthDay:hover.inRange,
+[data-theme="dark"] .flatpickr-day.nextMonthDay:hover.inRange,
+[data-theme="dark"] .flatpickr-day:focus.inRange,
+[data-theme="dark"] .flatpickr-day.prevMonthDay:focus.inRange,
+[data-theme="dark"] .flatpickr-day.nextMonthDay:focus.inRange {
+    background: rgba(59, 130, 246, 0.14);
+    border-color: rgba(59, 130, 246, 0.1);
+    box-shadow: -5px 0 0 rgba(59, 130, 246, 0.14), 5px 0 0 rgba(59, 130, 246, 0.14);
+}
+
+[data-theme="dark"] .flatpickr-time {
+    border-top: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.9);
+}
+
+[data-theme="dark"] .flatpickr-time input,
+[data-theme="dark"] .flatpickr-time .flatpickr-time-separator,
+[data-theme="dark"] .flatpickr-time .flatpickr-am-pm {
+    color: var(--text-primary);
+    background: transparent;
+}
+
+[data-theme="dark"] .flatpickr-time input:hover,
+[data-theme="dark"] .flatpickr-time .flatpickr-am-pm:hover,
+[data-theme="dark"] .flatpickr-time input:focus,
+[data-theme="dark"] .flatpickr-time .flatpickr-am-pm:focus {
+    background: rgba(59, 130, 246, 0.12);
 }
 
 /* 地图搜索框 */
@@ -1079,10 +1186,6 @@ body {
     gap: 4px;
 }
 
-.recommend-name .status-icon {
-    font-size: 14px;
-}
-
 .recommend-time {
     font-size: 12px;
     color: var(--text-secondary);
@@ -1090,6 +1193,7 @@ body {
 
 .recommend-actions {
     display: flex;
+    align-items: center;
     gap: var(--space-xs);
 }
 
@@ -1104,6 +1208,35 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.toggle-recommend-status-btn {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 1;
+    text-shadow: 0 0 2px rgba(255,255,255,0.98), 0 0 6px rgba(0,0,0,0.35);
+}
+
+.toggle-recommend-status-btn .status-icon {
+    display: block;
+    -webkit-text-stroke: 4px rgba(50, 50, 50, 0.98);
+    paint-order: stroke fill;
+}
+
+.toggle-recommend-status-btn.is-completed {
+    color: #34C759;
+}
+
+.toggle-recommend-status-btn.is-pending {
+    color: #FFD60A;
+}
+
+.toggle-recommend-status-btn:hover {
+    background: rgba(148, 163, 184, 0.12) !important;
+    transform: translateY(-1px);
 }
 
 .recommend-actions button:hover {

@@ -223,6 +223,35 @@
 
     const t = (key, params) => I18n.t(key, params);
 
+    const MapTileConfig = {
+        DEFAULT: {
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            options: {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 19
+            }
+        },
+
+        get() {
+            const customUrl = localStorage.getItem('heart_river_tile_url');
+            const customAttribution = localStorage.getItem('heart_river_tile_attribution');
+            const customSubdomains = localStorage.getItem('heart_river_tile_subdomains');
+
+            if (!customUrl) {
+                return this.DEFAULT;
+            }
+
+            return {
+                url: customUrl,
+                options: {
+                    attribution: customAttribution || this.DEFAULT.options.attribution,
+                    maxZoom: 19,
+                    subdomains: customSubdomains || undefined
+                }
+            };
+        }
+    };
+
     // =====================
     // 数据管理模块
     // =====================
@@ -536,9 +565,8 @@
             });
 
             // 使用OpenStreetMap
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(this.map);
+            const tileConfig = MapTileConfig.get();
+            L.tileLayer(tileConfig.url, tileConfig.options).addTo(this.map);
         },
 
         // 清空标记
@@ -1429,11 +1457,13 @@
                                 <div class="recommend-info">
                                     <div class="recommend-name">
                                         ${item.name}
-                                        ${item.completed ? '<span class="status-icon">✅</span>' : '<span class="status-icon">⚠️</span>'}
                                     </div>
                                     ${item.plannedTime ? `<div class="recommend-time">${item.plannedTime}</div>` : ''}
                                 </div>
                                 <div class="recommend-actions">
+                                    <button class="toggle-recommend-status-btn ${item.completed ? 'is-completed' : 'is-pending'}" title="${item.completed ? t('unmarkDone') : t('markDone')}" aria-label="${item.completed ? t('unmarkDone') : t('markDone')}">
+                                        <span class="status-icon">${item.completed ? '✓' : '!'}</span>
+                                    </button>
                                     <button class="edit-recommend-btn" title="${t('edit')}">
                                         <svg viewBox="0 0 24 24" width="14" height="14">
                                             <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
@@ -1450,6 +1480,22 @@
                     </div>
                 `;
             }).join('');
+
+            // 绑定状态切换事件
+            container.querySelectorAll('.toggle-recommend-status-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = e.target.closest('.recommend-item').dataset.id;
+                    const recommendations = DataManager.getAllRecommendations();
+                    const item = recommendations.find(r => r.id === id);
+                    if (item) {
+                        item.completed = !item.completed;
+                        DataManager.updateRecommendation(item);
+                        this.renderRecommendations();
+                        MapManager.showRecommendations();
+                    }
+                });
+            });
 
             // 绑定编辑事件
             container.querySelectorAll('.edit-recommend-btn').forEach(btn => {
